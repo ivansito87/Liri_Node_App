@@ -42,7 +42,8 @@ switch (liriDo) {
             if (error) console.log(error);
         })
         break;
-    // case 'Mangoes':
+    case 'spotify-this-song':
+        console.log(`Works!`)
     // case 'Papayas':
     //     console.log('Mangoes and papayas are $2.79 a pound.');
     //     // expected output: "Mangoes and papayas are $2.79 a pound."
