@@ -26,7 +26,7 @@ switch (liriDo) {
                 let dateEvent = moment(event.datetime).format("YYYY/MM/DD");
                 let timeEvent = moment(event.datetime).format("HH:mm:ss");
                 // console.log(event);
-                console.log(`***************************************************************`.rainbow);
+                console.log(`**********************************************************************************************************`.rainbow);
                 console.log(`|                                                         `);
                 console.log(`|      Name of the venue ----- ${nameOfVenue}                `.green);
                 console.log(`|                                                         `);
@@ -36,40 +36,62 @@ switch (liriDo) {
                 console.log(`|                                                         `);
                 console.log(`|      Time of the Event ----- ${timeEvent}               `.yellow);
                 console.log(`|                                                         `);
-                console.log(`***************************************************************\n`.rainbow);
+                console.log(`**********************************************************************************************************\n\n`.rainbow);
             });
         }).catch((error) => {
             if (error) console.log(error);
         })
         break;
     case 'spotify-this-song':
-        console.log(`Works!-------------------------------------------------`);
         if (!userRequest) {
             spotify.search({ type: 'track', query: "Ace of Base, The Sign" }, function (err, data) {
                 if (err) console.log('Error occurred: ' + err);
                 else {
                 let arrAlbum = data.tracks.items;
-                console.log(arrAlbum);
-                    
+                    arrAlbum.forEach(album => {
+                        let nameArtist = `${album.artists[0].name}.`;
+                        let songName = `${album.name}.`;
+                        let previewLink = `${album.preview_url}`;
+                        let albumName = `${album.album.name}.`
+                        console.log(`**********************************************************************************************************`.rainbow);
+                        console.log(`|                                                         `);
+                        console.log(`|   Name of Artist(s)  ----- ${nameArtist}                `.green);
+                        console.log(`|                                                         `);
+                        console.log(`|   Song Name          ----- ${songName}              `.cyan);
+                        console.log(`|                                                         `);
+                        console.log(`|   Preview URL        ----- ${previewLink}                   `.magenta);
+                        console.log(`|                                                         `);
+                        console.log(`|   Album Name         ----- ${albumName}               `.yellow);
+                        console.log(`|                                                         `);
+                        console.log(`**********************************************************************************************************\n`.rainbow);
+                    });
             }
         });
-        }
-        // spotify.search({ type: 'track', query: userRequest }, function (err, data) {
-        //     if (err) console.log('Error occurred: ' + err);
-        //     else {
-        //         let arr = data.tracks;
-        //         console.log(arr);
-        //     }
-            
-        // });
-        // spotify
-        //     .search({ type: 'track', query: 'All the Small Things' })
-        //     .then(function (response) {
-        //         console.log(response);
-        //     })
-        //     .catch(function (err) {
-        //         console.log(err);
-        //     });
+        } else if (userRequest) {
+            spotify.search({ type: 'track', query: userRequest }, function (err, data) {
+                if (err) console.log('Error occurred: ' + err);
+                else {
+                    let arrAlbum = data.tracks.items;
+                    arrAlbum.forEach(album => {
+                        let nameArtist = `${album.artists[0].name}.`;
+                        let songName = `${album.name}.`;
+                        let previewLink = `${album.preview_url}`;
+                        let albumName = `${album.album.name}.`
+                        console.log(`**********************************************************************************************************`.rainbow);
+                        console.log(`|                                                         `);
+                        console.log(`|   Name of Artist(s)  ----- ${nameArtist}                `.green);
+                        console.log(`|                                                         `);
+                        console.log(`|   Song Name          ----- ${songName}              `.cyan);
+                        console.log(`|                                                         `);
+                        console.log(`|   Preview URL        ----- ${previewLink}                   `.magenta);
+                        console.log(`|                                                         `);
+                        console.log(`|   Album Name         ----- ${albumName}               `.yellow);
+                        console.log(`|                                                         `);
+                        console.log(`**********************************************************************************************************\n\n`.rainbow);
+                    });
+                }
+            });
+        }    
         break;
     // case 'Papayas':
     //     console.log('Mangoes and papayas are $2.79 a pound.');
