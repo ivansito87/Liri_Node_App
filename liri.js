@@ -5,7 +5,7 @@ var spotify = new Spotify(keys.spotify);
 var axios = require("axios");
 var moment = require('moment');
 const colors = require('colors');
-console.log(spotify);
+// console.log(spotify);
 
 var userRequest = process.argv.slice(3).join(" ");
 var liriDo = process.argv[2];
@@ -43,7 +43,34 @@ switch (liriDo) {
         })
         break;
     case 'spotify-this-song':
-        console.log(`Works!`)
+        console.log(`Works!-------------------------------------------------`);
+        if (!userRequest) {
+            spotify.search({ type: 'track', query: "Ace of Base, The Sign" }, function (err, data) {
+                if (err) console.log('Error occurred: ' + err);
+                else {
+                let arrAlbum = data.tracks.items;
+                console.log(arrAlbum);
+                    
+            }
+        });
+        }
+        // spotify.search({ type: 'track', query: userRequest }, function (err, data) {
+        //     if (err) console.log('Error occurred: ' + err);
+        //     else {
+        //         let arr = data.tracks;
+        //         console.log(arr);
+        //     }
+            
+        // });
+        // spotify
+        //     .search({ type: 'track', query: 'All the Small Things' })
+        //     .then(function (response) {
+        //         console.log(response);
+        //     })
+        //     .catch(function (err) {
+        //         console.log(err);
+        //     });
+        break;
     // case 'Papayas':
     //     console.log('Mangoes and papayas are $2.79 a pound.');
     //     // expected output: "Mangoes and papayas are $2.79 a pound."
