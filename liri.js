@@ -9,30 +9,50 @@ var fs = require("fs");
 
 let userRequest = process.argv.slice(3).join(" ");
 let liriDo = process.argv[2];
-var bandsintownUrl = "https://rest.bandsintown.com/artists/" + userRequest + "/events?app_id=codingbootcamp";
-var omdbUrl = "http://www.omdbapi.com/?t=" + userRequest + "&y=&plot=short&apikey=trilogy";
-var omdbUrlNoArgs = "http://www.omdbapi.com/?t=Mr.Nobody.&y=&plot=short&apikey=trilogy";
+
+if (liriDo === "do-what-it-says") {
+
+    const contents = fs.readFileSync(__dirname + "/random.txt", "utf8");
+    console.log(contents);
+    let output = contents.split("\n");
+    console.log(output);
+    let randomNum = Math.floor(Math.random() * output.length);
+    console.log(randomNum);
+    let newAction = output[randomNum].split(",");
+    console.log(newAction);
+    liriDo = newAction[0];
+    userRequest = newAction[1];
+    console.log(liriDo);
+    console.log(userRequest);
+
+}
+
+
 
 switch (liriDo) {
     case 'concert-this':
+        fs.appendFileSync(__dirname + '/random.txt', liriDo + "," + userRequest + "\n");
+        let bandsintownUrl = "https://rest.bandsintown.com/artists/" + userRequest + "/events?app_id=codingbootcamp";
         axios.get(bandsintownUrl).then((response) => {
             let arr = response.data;
             console.log(arr);
             arr.forEach(event => {
+                let artist = `${event.lineup}`;
                 let nameOfVenue = `${event.venue.name}.`;
                 let venueLocation = `${event.venue.city} ${event.venue.region}, ${event.venue.country}.`;
                 let dateEvent = moment(event.datetime).format("YYYY/MM/DD");
                 let timeEvent = moment(event.datetime).format("HH:mm:ss");
                 console.log(`**********************************************************************************************************`.rainbow);
-                console.log(`|                                                         `);
-                console.log(`|      Name of the venue ----- ${nameOfVenue}                `.green);
-                console.log(`|                                                         `);
-                console.log(`|      Venue location    ----- ${venueLocation}              `.cyan);
-                console.log(`|                                                         `);
-                console.log(`|      Date of the Event ----- ${dateEvent}                   `.magenta);
-                console.log(`|                                                         `);
-                console.log(`|      Time of the Event ----- ${timeEvent}               `.yellow);
-                console.log(`|                                                         `);
+                console.log(`|      Artist  --------------- ${artist}                                                                       `.yellow);
+                console.log(`|                                                                                                                     `);
+                console.log(`|      Name of the venue ----- ${nameOfVenue}                                                                   `.green);
+                console.log(`|                                                                                                                     `);
+                console.log(`|      Venue location    ----- ${venueLocation}                                                                  `.cyan);
+                console.log(`|                                                                                                                     `);
+                console.log(`|      Date of the Event ----- ${dateEvent}                                                                   `.magenta);
+                console.log(`|                                                                                                                     `);
+                console.log(`|      Time of the Event ----- ${timeEvent}                                                                    `.yellow);
+                console.log(`|                                                                                                                     `);
                 console.log(`**********************************************************************************************************\n\n`.rainbow);
             });
         }).catch((error) => {
@@ -41,6 +61,7 @@ switch (liriDo) {
         break;
     case 'spotify-this-song':
         if (!userRequest) {
+            fs.appendFileSync(__dirname + '/random.txt', liriDo + "," + "Ace of Base, The Sign" + "\n");
             spotify.search({ type: 'track', query: "Ace of Base, The Sign" }, function (err, data) {
                 if (err) console.log('Error occurred: ' + err);
                 else {
@@ -51,20 +72,21 @@ switch (liriDo) {
                         let previewLink = `${album.preview_url}`;
                         let albumName = `${album.album.name}.`
                         console.log(`**********************************************************************************************************`.rainbow);
-                        console.log(`|                                                         `);
-                        console.log(`|   Name of Artist(s)  ----- ${nameArtist}                `.green);
-                        console.log(`|                                                         `);
-                        console.log(`|   Song Name          ----- ${songName}              `.cyan);
-                        console.log(`|                                                         `);
-                        console.log(`|   Preview URL        ----- ${previewLink}                   `.magenta);
-                        console.log(`|                                                         `);
-                        console.log(`|   Album Name         ----- ${albumName}               `.yellow);
-                        console.log(`|                                                         `);
+                        console.log(`|                                                                                                                 `);
+                        console.log(`|   Name of Artist(s)  ----- ${nameArtist}                                                                  `.green);
+                        console.log(`|                                                                                                                 `);
+                        console.log(`|   Song Name          ----- ${songName}                                                                     `.cyan);
+                        console.log(`|                                                                                                                 `);
+                        console.log(`|   Preview URL        ----- ${previewLink}                                                               `.magenta);
+                        console.log(`|                                                                                                                 `);
+                        console.log(`|   Album Name         ----- ${albumName}                                                                                                                               `.yellow);
+                        console.log(`|                                                                                                                 `);
                         console.log(`**********************************************************************************************************\n`.rainbow);
                     });
                 }
             });
         } else if (userRequest) {
+            fs.appendFileSync(__dirname + '/random.txt', liriDo + "," + userRequest + "\n");
             spotify.search({ type: 'track', query: userRequest }, function (err, data) {
                 if (err) console.log('Error occurred: ' + err);
                 else {
@@ -74,17 +96,17 @@ switch (liriDo) {
                         let songName = `${album.name}.`;
                         let previewLink = `${album.preview_url}`;
                         let albumName = `${album.album.name}.`
-                        console.log(`**********************************************************************************************************`.rainbow);
-                        console.log(`|                                                         `);
-                        console.log(`|   Name of Artist(s)  ----- ${nameArtist}                `.green);
-                        console.log(`|                                                         `);
-                        console.log(`|   Song Name          ----- ${songName}              `.cyan);
-                        console.log(`|                                                         `);
-                        console.log(`|   Preview URL        ----- ${previewLink}                   `.magenta);
-                        console.log(`|                                                         `);
-                        console.log(`|   Album Name         ----- ${albumName}               `.yellow);
-                        console.log(`|                                                         `);
-                        console.log(`**********************************************************************************************************\n\n`.rainbow);
+                        console.log(`**********************************************************************************************`.rainbow);
+                        console.log(`|                                                                                                         `);
+                        console.log(`|   Name of Artist(s)  ----- ${nameArtist}                                                          `.green);
+                        console.log(`|                                                                                                         `);
+                        console.log(`|   Song Name          ----- ${songName}                                                             `.cyan);
+                        console.log(`|                                                                                                         `);
+                        console.log(`|   Preview URL        ----- ${previewLink}                                                       `.magenta);
+                        console.log(`|                                                                                                         `);
+                        console.log(`|   Album Name         ----- ${albumName}                                                          `.yellow);
+                        console.log(`|                                                                                                         `);
+                        console.log(`**********************************************************************************************\n\n`.rainbow);
                     });
                 }
             });
@@ -92,6 +114,8 @@ switch (liriDo) {
         break;
     case 'movie-this':
         if (!userRequest) {
+            var omdbUrlNoArgs = "http://www.omdbapi.com/?t=Mr.Nobody.&y=&plot=short&apikey=trilogy";
+            fs.appendFileSync(__dirname + '/random.txt', liriDo + "," + "Mr Nobody" + "\n");
             axios.get(omdbUrlNoArgs).then((response) => {
                 let movie = response.data;
                 let movieTitle = movie.Title;
@@ -102,6 +126,7 @@ switch (liriDo) {
                 let language = movie.Language;
                 let plot = movie.Plot;
                 let actors = movie.Actors;
+                console.log("\n\n");
                 console.log(`*****************************************************************************`.rainbow);
                 console.log(`|                                                                            `);
                 console.log(`|  Title of the movie -  -  -  -  -  -  -  -  -  -   ${movieTitle}           `.cyan);
@@ -118,6 +143,8 @@ switch (liriDo) {
                 if (error) console.log(error);
             })
         } else if (userRequest) {
+            var omdbUrl = "http://www.omdbapi.com/?t=" + userRequest + "&y=&plot=short&apikey=trilogy";
+            fs.appendFileSync(__dirname + '/random.txt', liriDo + "," + userRequest + "\n");
             axios.get(omdbUrl).then((response) => {
                 let movie = response.data;
                 let movieTitle = movie.Title;
@@ -128,6 +155,7 @@ switch (liriDo) {
                 let language = movie.Language;
                 let plot = movie.Plot;
                 let actors = movie.Actors;
+                console.log("\n\n");
                 console.log(`*****************************************************************************`.rainbow);
                 console.log(`|                                                                            `);
                 console.log(`|  Title of the movie -  -  -  -  -  -  -  -  -  -   ${movieTitle}           `.cyan);
@@ -145,55 +173,10 @@ switch (liriDo) {
             })
         }
         break;
-    case 'do-what-it-says':
-        // console.log(`Works`);
-        fs.readFile(__dirname + "/random.txt", "utf8", (err, data) => {
-            if (err) return console.log(err);
-
-            // Break the string down by comma separation and store the contents into the output array.
-            var output = data.split(",");
-            console.log(output)
-            liriDo = output[0];
-            userRequest = output[1];
-            // Loop Through the newly created output array
-            // for (var i = 0; i < output.length; i++) {
-
-            //     // Print each element (item) of the array/
-            //     console.log(output[i]);
-            // }
-        });
-        break;
     default:
         console.log("No valid argument has been provided, please enter one of the following commands: 'concert-this', 'spotify-this-song', 'movie-this', 'do-what-it-says' followed by parameter.");
-        // fs.readFile(__dirname + "/random.txt", "utf8", (err, data) => {
-        //     if (err) throw err;
-        //     data = data.split(", ");
-        //     console.log(data);
-        // });
 }
 
 
 
-// function total() {
 
-//     // We will read the existing bank file
-//     fs.readFile("bank.txt", "utf8", function (err, data) {
-//         if (err) {
-//             return console.log(err);
-//         }
-
-//         // Break down all the numbers inside
-//         data = data.split(", ");
-//         var result = 0;
-
-//         // Loop through those numbers and add them together to get a sum.
-//         for (var i = 0; i < data.length; i++) {
-//             if (parseFloat(data[i])) {
-//                 result += parseFloat(data[i]);
-//             }
-//         }
-
-//         // We will then print the final balance rounded to two decimal places.
-//         console.log("You have a total of " + result.toFixed(2));
-//     });
-// }
