@@ -16,7 +16,7 @@ if (liriDo === "do-what-it-says") {
     console.log(contents);
     let output = contents.split("\n");
     console.log(output);
-    let randomNum = Math.floor(Math.random() * output.length);
+    let randomNum = Math.floor(Math.random() * output.length - 1);
     console.log(randomNum);
     let newAction = output[randomNum].split(",");
     console.log(newAction);
@@ -27,37 +27,69 @@ if (liriDo === "do-what-it-says") {
 
 }
 
-
-
 switch (liriDo) {
     case 'concert-this':
-        fs.appendFileSync(__dirname + '/random.txt', liriDo + "," + userRequest + "\n");
-        let bandsintownUrl = "https://rest.bandsintown.com/artists/" + userRequest + "/events?app_id=codingbootcamp";
-        axios.get(bandsintownUrl).then((response) => {
-            let arr = response.data;
-            console.log(arr);
-            arr.forEach(event => {
-                let artist = `${event.lineup}`;
-                let nameOfVenue = `${event.venue.name}.`;
-                let venueLocation = `${event.venue.city} ${event.venue.region}, ${event.venue.country}.`;
-                let dateEvent = moment(event.datetime).format("YYYY/MM/DD");
-                let timeEvent = moment(event.datetime).format("HH:mm:ss");
-                console.log(`**********************************************************************************************************`.rainbow);
-                console.log(`|      Artist  --------------- ${artist}                                                                       `.yellow);
-                console.log(`|                                                                                                                     `);
-                console.log(`|      Name of the venue ----- ${nameOfVenue}                                                                   `.green);
-                console.log(`|                                                                                                                     `);
-                console.log(`|      Venue location    ----- ${venueLocation}                                                                  `.cyan);
-                console.log(`|                                                                                                                     `);
-                console.log(`|      Date of the Event ----- ${dateEvent}                                                                   `.magenta);
-                console.log(`|                                                                                                                     `);
-                console.log(`|      Time of the Event ----- ${timeEvent}                                                                    `.yellow);
-                console.log(`|                                                                                                                     `);
-                console.log(`**********************************************************************************************************\n\n`.rainbow);
-            });
-        }).catch((error) => {
-            if (error) console.log(error);
-        })
+        if (!userRequest) {
+            fs.appendFileSync(__dirname + '/random.txt', liriDo + "," + "Tiesto" + "\n");
+            let bandsintownUrl = "https://rest.bandsintown.com/artists/Tiesto/events?app_id=codingbootcamp";
+            axios.get(bandsintownUrl).then((response) => {
+                let arr = response.data;
+                console.log(arr);
+                arr.forEach(event => {
+                    let artist = `${event.lineup}`;
+                    let nameOfVenue = `${event.venue.name}.`;
+                    let venueLocation = `${event.venue.city} ${event.venue.region}, ${event.venue.country}.`;
+                    let dateEvent = moment(event.datetime).format("YYYY/MM/DD");
+                    let timeEvent = moment(event.datetime).format("HH:mm:ss");
+                    console.log(`**********************************************************************************************`.rainbow);
+                    console.log(`|                            Concert This                                                    |       `.bold);
+                    console.log(`|                                                                                            |            `);
+                    console.log(`                   Artist  --------------- ${artist}                                               `.yellow);
+                    console.log(`|                                                                                            |            `);
+                    console.log(`                   Name of the venue ----- ${nameOfVenue}                                           `.green);
+                    console.log(`|                                                                                            |            `);
+                    console.log(`                   Venue location    ----- ${venueLocation}                                          `.cyan);
+                    console.log(`|                                                                                            |            `);
+                    console.log(`                   Date of the Event ----- ${dateEvent}                                           `.magenta);
+                    console.log(`|                                                                                            |            `);
+                    console.log(`                   Time of the Event ----- ${timeEvent}                                            `.yellow);
+                    console.log(`|                                                                                            |            `);
+                    console.log(`**********************************************************************************************\n\n`.rainbow);
+                });
+            }).catch((error) => {
+                if (error) console.log(error);
+            })
+        } else if (userRequest) {
+            fs.appendFileSync(__dirname + '/random.txt', liriDo + "," + userRequest + "\n");
+            let bandsintownUrl = "https://rest.bandsintown.com/artists/" + userRequest + "/events?app_id=codingbootcamp";
+            axios.get(bandsintownUrl).then((response) => {
+                let arr = response.data;
+                console.log(arr);
+                arr.forEach(event => {
+                    let artist = `${event.lineup}`;
+                    let nameOfVenue = `${event.venue.name}.`;
+                    let venueLocation = `${event.venue.city} ${event.venue.region}, ${event.venue.country}.`;
+                    let dateEvent = moment(event.datetime).format("YYYY/MM/DD");
+                    let timeEvent = moment(event.datetime).format("HH:mm:ss");
+                    console.log(`**********************************************************************************************`.rainbow);
+                    console.log(`|                            Concert This                                                    |       `.bold);
+                    console.log(`|                                                                                            |            `);
+                    console.log(`                   Artist  --------------- ${artist}                                               `.yellow);
+                    console.log(`|                                                                                            |            `);
+                    console.log(`                   Name of the venue ----- ${nameOfVenue}                                           `.green);
+                    console.log(`|                                                                                            |            `);
+                    console.log(`                   Venue location    ----- ${venueLocation}                                          `.cyan);
+                    console.log(`|                                                                                            |            `);
+                    console.log(`                   Date of the Event ----- ${dateEvent}                                           `.magenta);
+                    console.log(`|                                                                                            |            `);
+                    console.log(`                   Time of the Event ----- ${timeEvent}                                            `.yellow);
+                    console.log(`|                                                                                            |            `);
+                    console.log(`**********************************************************************************************\n\n`.rainbow);
+                });
+            }).catch((error) => {
+                if (error) console.log(error);
+            })
+        }
         break;
     case 'spotify-this-song':
         if (!userRequest) {
@@ -71,17 +103,18 @@ switch (liriDo) {
                         let songName = `${album.name}.`;
                         let previewLink = `${album.preview_url}`;
                         let albumName = `${album.album.name}.`
-                        console.log(`**********************************************************************************************************`.rainbow);
-                        console.log(`|                                                                                                                 `);
-                        console.log(`|   Name of Artist(s)  ----- ${nameArtist}                                                                  `.green);
-                        console.log(`|                                                                                                                 `);
-                        console.log(`|   Song Name          ----- ${songName}                                                                     `.cyan);
-                        console.log(`|                                                                                                                 `);
-                        console.log(`|   Preview URL        ----- ${previewLink}                                                               `.magenta);
-                        console.log(`|                                                                                                                 `);
-                        console.log(`|   Album Name         ----- ${albumName}                                                                                                                               `.yellow);
-                        console.log(`|                                                                                                                 `);
-                        console.log(`**********************************************************************************************************\n`.rainbow);
+                        console.log(`*****************************************************************************************************************************************************`.rainbow);
+                        console.log(`|                      Spotify This Song                                                                                                            |`.bold);
+                        console.log(`|                                                                                                                                                   |`);
+                        console.log(`     Name of Artist(s)  ----- ${nameArtist}                                                                                                       `.green);
+                        console.log(`|                                                                                                                                                   |`);
+                        console.log(`     Song Name          ----- ${songName}                                                                                                         `.cyan);
+                        console.log(`|                                                                                                                                                   |`);
+                        console.log(`     Preview URL        ----- ${previewLink}                                                                                                                 `.magenta);
+                        console.log(`|                                                                                                                                                   |`);
+                        console.log(`     Album Name         ----- ${albumName}                                                                                                        `.yellow);
+                        console.log(`|                                                                                                                                                   |`);
+                        console.log(`*****************************************************************************************************************************************************\n\n`.rainbow);
                     });
                 }
             });
@@ -96,17 +129,18 @@ switch (liriDo) {
                         let songName = `${album.name}.`;
                         let previewLink = `${album.preview_url}`;
                         let albumName = `${album.album.name}.`
-                        console.log(`**********************************************************************************************`.rainbow);
-                        console.log(`|                                                                                                         `);
-                        console.log(`|   Name of Artist(s)  ----- ${nameArtist}                                                          `.green);
-                        console.log(`|                                                                                                         `);
-                        console.log(`|   Song Name          ----- ${songName}                                                             `.cyan);
-                        console.log(`|                                                                                                         `);
-                        console.log(`|   Preview URL        ----- ${previewLink}                                                       `.magenta);
-                        console.log(`|                                                                                                         `);
-                        console.log(`|   Album Name         ----- ${albumName}                                                          `.yellow);
-                        console.log(`|                                                                                                         `);
-                        console.log(`**********************************************************************************************\n\n`.rainbow);
+                        console.log(`*****************************************************************************************************************************************************`.rainbow);
+                        console.log(`|                      Spotify This Song                                                                                                            |`.bold);
+                        console.log(`|                                                                                                                                                   |`);
+                        console.log(`     Name of Artist(s)  ----- ${nameArtist}                                                                                                       `.green);
+                        console.log(`|                                                                                                                                                   |`);
+                        console.log(`     Song Name          ----- ${songName}                                                                                                         `.cyan);
+                        console.log(`|                                                                                                                                                   |`);
+                        console.log(`     Preview URL        ----- ${previewLink}                                                                                                        `.magenta);
+                        console.log(`|                                                                                                                                                   |`);
+                        console.log(`     Album Name         ----- ${albumName}                                                                                                        `.yellow);
+                        console.log(`|                                                                                                                                                   |`);
+                        console.log(`*****************************************************************************************************************************************************\n\n`.rainbow);
                     });
                 }
             });
@@ -127,18 +161,19 @@ switch (liriDo) {
                 let plot = movie.Plot;
                 let actors = movie.Actors;
                 console.log("\n\n");
-                console.log(`*****************************************************************************`.rainbow);
-                console.log(`|                                                                            `);
-                console.log(`|  Title of the movie -  -  -  -  -  -  -  -  -  -   ${movieTitle}           `.cyan);
-                console.log(`|  Date Released      -  -  -  -  -  -  -  -  -  -   ${dateReleased}         `.green);
-                console.log(`|  Rating of the movie   -  -  -  -  -  -  -  -  -   ${rating}               `.yellow);
-                console.log(`|  Rotten Tomatoes Rating of the movie  -  -  -  -   ${rottenTomatoes}       `.magenta);
-                console.log(`|  Country of production -  -  -  -  -  -  -  -  -   ${country}              `.blue);
-                console.log(`|  Language of the movie -  -  -  -  -  -  -  -  -   ${language}             `.green);
-                console.log(`|  Plot   -  -  -  -  -  -  -  -  -  -  -  -  -  -   ${plot}                 `.yellow);
-                console.log(`|  Actors -  -  -  -  -  -  -  -  -  -  -  -  -  -   ${actors}               `.magenta);
-                console.log(`|                                                                            `);
-                console.log(`*****************************************************************************\n\n`.rainbow);
+                console.log(`******************************************************************************************************`.rainbow);
+                console.log(`|                      Movie This                                                                      `.bold);
+                console.log(`|                                                                                                      `);
+                console.log(`|  Title of the movie -  -  -  -  -  -  -  -  -  -   ${movieTitle}                                     `.cyan);
+                console.log(`|  Date Released      -  -  -  -  -  -  -  -  -  -   ${dateReleased}                                   `.green);
+                console.log(`|  Rating of the movie   -  -  -  -  -  -  -  -  -   ${rating}                                         `.yellow);
+                console.log(`|  Rotten Tomatoes Rating of the movie  -  -  -  -   ${rottenTomatoes}                                 `.magenta);
+                console.log(`|  Country of production -  -  -  -  -  -  -  -  -   ${country}                                        `.blue);
+                console.log(`|  Language of the movie -  -  -  -  -  -  -  -  -   ${language}                                       `.green);
+                console.log(`|  Plot   -  -  -  -  -  -  -  -  -  -  -  -  -  -   ${plot}                                           `.yellow);
+                console.log(`|  Actors -  -  -  -  -  -  -  -  -  -  -  -  -  -   ${actors}                                         `.magenta);
+                console.log(`|                                                                                                      `);
+                console.log(`******************************************************************************************************\n\n`.rainbow);
             }).catch((error) => {
                 if (error) console.log(error);
             })
@@ -156,18 +191,19 @@ switch (liriDo) {
                 let plot = movie.Plot;
                 let actors = movie.Actors;
                 console.log("\n\n");
-                console.log(`*****************************************************************************`.rainbow);
-                console.log(`|                                                                            `);
-                console.log(`|  Title of the movie -  -  -  -  -  -  -  -  -  -   ${movieTitle}           `.cyan);
-                console.log(`|  Date Released      -  -  -  -  -  -  -  -  -  -   ${dateReleased}         `.green);
-                console.log(`|  Rating of the movie   -  -  -  -  -  -  -  -  -   ${rating}               `.yellow);
-                console.log(`|  Rotten Tomatoes Rating of the movie  -  -  -  -   ${rottenTomatoes}       `.magenta);
-                console.log(`|  Country of production -  -  -  -  -  -  -  -  -   ${country}              `.blue);
-                console.log(`|  Language of the movie -  -  -  -  -  -  -  -  -   ${language}             `.green);
-                console.log(`|  Plot   -  -  -  -  -  -  -  -  -  -  -  -  -  -   ${plot}                 `.yellow);
-                console.log(`|  Actors -  -  -  -  -  -  -  -  -  -  -  -  -  -   ${actors}               `.magenta);
-                console.log(`|                                                                            `);
-                console.log(`*****************************************************************************\n\n`.rainbow);
+                console.log(`******************************************************************************************************`.rainbow);
+                console.log(`|                      Movie This                                                                      `.bold);
+                console.log(`|                                                                                                      `);
+                console.log(`|  Title of the movie -  -  -  -  -  -  -  -  -  -   ${movieTitle}                                     `.cyan);
+                console.log(`|  Date Released      -  -  -  -  -  -  -  -  -  -   ${dateReleased}                                   `.green);
+                console.log(`|  Rating of the movie   -  -  -  -  -  -  -  -  -   ${rating}                                         `.yellow);
+                console.log(`|  Rotten Tomatoes Rating of the movie  -  -  -  -   ${rottenTomatoes}                                 `.magenta);
+                console.log(`|  Country of production -  -  -  -  -  -  -  -  -   ${country}                                        `.blue);
+                console.log(`|  Language of the movie -  -  -  -  -  -  -  -  -   ${language}                                       `.green);
+                console.log(`|  Plot   -  -  -  -  -  -  -  -  -  -  -  -  -  -   ${plot}                                           `.yellow);
+                console.log(`|  Actors -  -  -  -  -  -  -  -  -  -  -  -  -  -   ${actors}                                         `.magenta);
+                console.log(`|                                                                                                      `);
+                console.log(`******************************************************************************************************\n\n`.rainbow);
             }).catch((error) => {
                 if (error) console.log(error);
             })
