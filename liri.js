@@ -13,17 +13,11 @@ let liriDo = process.argv[2];
 if (liriDo === "do-what-it-says") {
 
     const contents = fs.readFileSync(__dirname + "/random.txt", "utf8");
-    console.log(contents);
     let output = contents.split("\n");
-    console.log(output);
     let randomNum = Math.floor(Math.random() * output.length - 1);
-    console.log(randomNum);
     let newAction = output[randomNum].split(",");
-    console.log(newAction);
     liriDo = newAction[0];
     userRequest = newAction[1];
-    console.log(liriDo);
-    console.log(userRequest);
 
 }
 
@@ -34,7 +28,6 @@ switch (liriDo) {
             let bandsintownUrl = "https://rest.bandsintown.com/artists/Tiesto/events?app_id=codingbootcamp";
             axios.get(bandsintownUrl).then((response) => {
                 let arr = response.data;
-                console.log(arr);
                 arr.forEach(event => {
                     let artist = `${event.lineup}`;
                     let nameOfVenue = `${event.venue.name}.`;
@@ -64,7 +57,6 @@ switch (liriDo) {
             let bandsintownUrl = "https://rest.bandsintown.com/artists/" + userRequest + "/events?app_id=codingbootcamp";
             axios.get(bandsintownUrl).then((response) => {
                 let arr = response.data;
-                console.log(arr);
                 arr.forEach(event => {
                     let artist = `${event.lineup}`;
                     let nameOfVenue = `${event.venue.name}.`;

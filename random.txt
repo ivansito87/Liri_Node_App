@@ -79,3 +79,32 @@ spotify-this-song,Tiesto Harder
 concert-this,Ariana Grande
 concert-this,Ariana Grande
 spotify-this-song,tiesto harder
+concert-this,Tiesto
+spotify-this-song,Brooks Linx
+spotify-this-song,Brooks Boomerang
+spotify-this-song,Martin Garrix Glitch
+spotify-this-song,Martin Garrix High on life
+spotify-this-song,Martin Garrix Animals
+spotify-this-song,Bad Bunny Ya me acostumbre
+spotify-this-song,Bad Bunny Amorfoda
+spotify-this-song,J balvin x
+spotify-this-song,r3hab bad
+spotify-this-song,Ace of Base, The Sign
+concert-this,martin garrix
+
+movie-this,the lion king
+movie-this,the book of life
+movie-this,coco
+concert-this,martin garrix
+concert-this,martin garrix
+concert-this,Tiesto
+concert-this,kshmir
+concert-this,Cash Cash
+concert-this,dj Sneake
+concert-this,Ariana Grande
+concert-this,Tiesto
+concert-this,Deorro
+spotify-this-song,Ace of Base, The Sign
+spotify-this-song,tiesto harder
+movie-this,Mr Nobody
+movie-this,bolt
